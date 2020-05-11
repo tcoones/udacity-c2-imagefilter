@@ -1,3 +1,4 @@
+import { Router, Request, Response } from 'express';
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
@@ -31,7 +32,7 @@ var validUrl = require('valid-url');
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("/filteredimage", async(req, res) => {
+  app.get("/filteredimage", async (req: Request, res: Response) => {
     //Get image url param
       let { image_url } = req.query;
 
@@ -54,7 +55,7 @@ var validUrl = require('valid-url');
           //Delet on finish
           res.on('finish', () => deleteLocalFiles([imgPath]));
           //return result
-          return res.status(200).send(imgPath);
+          return res.status(200).sendFile(imgPath);
         } else {
           //Image not found
           return res.status(404).send({message:'Image not found'});
@@ -68,7 +69,7 @@ var validUrl = require('valid-url');
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req: Request, res: Response ) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
